@@ -74,6 +74,19 @@ app.get('/api/animals/:id', (req, res) => {
     }
 });
 
+// creates a server route that listens for 'post' requests: accepts user input to be stored on the server
+app.post('/api/animals', (req, res) => {
+    // 'req.body' is where the incoming, packaged content will be
+    console.log('req.body:', req.body);
+    // sending the data back to the client
+    res.json(req.body);
+});
+
+// parse incoming string or array of data
+app.use(express.urlencoded({ extended: true }));
+// parse incoming JSON data
+app.use(express.json());
+
 // telling the server to listen
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
