@@ -1,15 +1,16 @@
-// requiring the data from our server
-const { animals } = require('./data/animals');
-
+// npm package at the top of the file
 const express = require('express');
 // setting an environment variable for Heroku to run the app (if set, and if not default to 80)
 const PORT = process.env.PORT || 3001;
+// instantiates the server
 const app = express();
+// requiring the data from our server
+const { animals } = require('./data/animals');
 
 // setting filter functionality apart, takes in req.query and filters through the data returning a new filtered array; also ensures that query.personalityTraits is always an array before the '.forEach' method executes
-console.log('filterByQuery')
 function filterByQuery(query, animalsArray) {
-    let personalityTraitsArray = [];
+    console.log('filterByQuery')
+    let personalityTraitsArray;
     // filtered results of animalsArray are saved here:
     let filteredResults = animalsArray;
     // handles situation of request for multiple or single personality traits
@@ -27,7 +28,7 @@ function filterByQuery(query, animalsArray) {
         personalityTraitsArray.forEach(trait => {
         // Check trait against each animal in filteredResults array. Recall: it is initially a copy of animalsArray, but we're updating it for each trait in the loop; for each trait targeted by the filter, the filteredResults array will then contain only the entries including that trait: at the end pf the forEach() loop we'll have an array of animals each of which have every one of the traits requested.
             filteredResults = filteredResults.filter(
-                animal => animal.PersonalityTraits.indexOf(trait) !== -1
+                animal => animal.personalityTraits.indexOf(trait) !== -1
             );
         });
     }
@@ -49,6 +50,7 @@ function findById(id, animalsArray) {
     const result = animalsArray.filter(animal => animal.id === id)[0];
     return result;
 }
+
 // the route by which the front-end can request data; the two inputs are required: 
 // the 1st is a string (short for 'request') describing the route from which the client will fetch; 
 // the 2nd is a callback function (short for 'response') that will execute every time there's a GET request
@@ -61,13 +63,18 @@ app.get('/api/animals', (req, res) => {
     }
     res.json(results);
 });
+
 // note that a 'param' route must come after the other GET route; the specification of (unique) id should return only a single animal
-app.get('/api/animals', (req, res) => {
+app.get('/api/animals/:id', (req, res) => {
     const result = findById(req.params.id, animals);
+    if (result) {
         res.json(result);
+    } else {
+        res.send(404);
+    }
 });
-// 
+
+// telling the server to listen
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
 });
-
