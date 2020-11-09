@@ -5,6 +5,7 @@ const express = require('express');
 const app = express();
 
 // setting filter functionality apart, takes in req.query and filters through the data returning a new filtered array; also ensures that query.personalityTraits is always an array before the '.forEach' method executes
+console.log('filterByQuery')
 function filterByQuery(query, animalsArray) {
     let personalityTraitsArray = [];
     // filtered results of animalsArray are saved here:
@@ -12,11 +13,13 @@ function filterByQuery(query, animalsArray) {
     // handles situation of request for multiple or single personality traits
     if (query.personalityTraits) {
         // save personality traits as a dedicated array
-        // if personalityTraits is a string, place into new array and save
+        // if personalityTraits is a string, place and save within new array
         if (typeof query.personalityTraits === 'string') {
             personalityTraitsArray = [query.personalityTraits];
+            console.log('personalityTraitsArray1: ', personalityTraitsArray)
         } else {
             personalityTraitsArray = query.personalityTraits;
+            console.log('personalityTraitsArray2: ', personalityTraitsArray)
         }
         // loop through each trait of the personalityTraits array:
         personalityTraitsArray.forEach(trait => {
