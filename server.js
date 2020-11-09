@@ -2,6 +2,8 @@
 const { animals } = require('./data/animals');
 
 const express = require('express');
+// setting an environment variable for Heroku to run the app (if set, and if not default to 80)
+const PORT = process.env.PORT || 3001;
 const app = express();
 
 // setting filter functionality apart, takes in req.query and filters through the data returning a new filtered array; also ensures that query.personalityTraits is always an array before the '.forEach' method executes
@@ -55,7 +57,7 @@ app.get('/api/animals', (req, res) => {
     res.json(results);
 });
 // 
-app.listen(3001, () => {
-    console.log(`API server now on port 3001!`);
+app.listen(PORT, () => {
+    console.log(`API server now on port ${PORT}!`);
 });
 
