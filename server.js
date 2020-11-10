@@ -1,5 +1,10 @@
-// npm package at the top of the file
+// npm packages at the top of the file: keep in mind 'require' for importing data or functionality only reads and creates a copy of the data to use -- manipulation of the data supplied will not impact content of the file from which the data came
+// facilitates GET / POST functionality
 const express = require('express');
+// facilitates copy / read / write functionality
+const fs = require('fs');
+// facilitates ease of working with file/directory paths (particularly helpful when working in production environments such as Heroku)
+const path = require('path');
 // setting an environment variable for Heroku to run the app (if set, and if not default to 80)
 const PORT = process.env.PORT || 3001;
 // instantiates the server
@@ -48,6 +53,39 @@ function findById(id, animalsArray) {
     return result;
 }
 
+// separate function to handle POST route functionality (taking data from req.body and adding to animals.json file)
+function createNewAnimal(body, animalsArray) {
+    // main code
+    const animal = body;
+    animalsArray.push(animal);
+    // synchronous version of writeFile and does not require callback function (for a larger dataset, the ansynch version would be better)
+    fs.writeFileSync(
+        // joins value of '_dirname' (representing directory within which file code is executed) with path to the animals.json file
+        path.join(__dirname, './data/animals.json'),
+        // Javascript data array needs to be saved as json, so here it is converted; the other two arguments help keep the data formatted: 'null' indicates we do not want to edit existing data and '2' indicates we want to creates white space between values for readability
+        JSON.stringify({ animals: animalsArray }, null, 2)
+    );
+    
+    // return finished code to post route for response
+    return animal;
+}
+
+function validateAnimal(animal) {
+    if (!animal.name || typeof animal.name !== 'string') {
+        return false;
+    }
+    if (!animal.species || typeof animal.species !== 'string') {
+        return false;
+    }
+    if (!animal.diet || typeof animal.diet !== 'string') {
+        return false;
+    }
+    if (!animal.personalityTraits || !Array.isArray(animal.personalityTraits)) {
+        return false;
+    }
+    return true;
+}
+
 // the route by which the front-end can request data; the two inputs are required: 
 // the 1st is a string (short for 'request') describing the route from which the client will fetch; 
 // the 2nd is a callback function (short for 'response') that will execute every time there's a GET request
@@ -79,10 +117,17 @@ app.use(express.json());
 
 // creates a server route that listens for 'post' requests: accepts user input to be stored on the server
 app.post('/api/animals', (req, res) => {
-    // 'req.body' is where the incoming, packaged content will be
-    console.log('req.body:', req.body);
-    // sending the data back to the client
-    res.json(req.body);
+    // set new id to be one greater than the current highest index/id value (list order within array = index value: NOTE this method works only if datum are not removed from the array)
+    req.body.id = animals.length.toString();
+
+    // if an object is missing key data or is input incorrectly, send back 404 error
+    if (!validateAnimal(req.body)) {
+        res.status(400).send('The animal data is not properly formatted.');
+    } else {
+        // add animal to json file and animals array in this function
+        const animal = createNewAnimal(req.body, animals);
+        res.json(animal);
+    }
 });
 
 // telling the server to listen

@@ -108,6 +108,61 @@
         "loving"
       ],
       "id": "10"
+    },
+    {
+      "name": "Larry",
+      "species": "lemur",
+      "diet": "omnivore",
+      "personalityTraits": [
+        "hungry"
+      ],
+      "id": "11"
+    },
+    {
+      "name": "Larry",
+      "species": "lemur",
+      "diet": "omnivore",
+      "personalityTraits": [
+        "hungry"
+      ],
+      "id": "12"
+    },
+    {
+      "name": "Petunia",
+      "species": "marmoset",
+      "diet": "omnivore",
+      "personalityTraits": [
+        "hungry",
+        "flighty"
+      ],
+      "id": "13"
+    },
+    {
+      "name": "Pemba",
+      "species": "flying fox",
+      "diet": "frugivore",
+      "personalityTraits": [
+        "timid"
+      ],
+      "id": "14"
+    },
+    {
+      "name": "Horace",
+      "species": "lion",
+      "diet": "carnivore",
+      "personalityTraits": [
+        ""
+      ],
+      "id": "15"
+    },
+    {
+      "name": "Horace",
+      "species": "lion",
+      "diet": "15",
+      "personalityTraits": [
+        "ostentatious"
+      ],
+      "id": "16"
     }
   ]
 }
