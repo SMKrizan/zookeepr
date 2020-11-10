@@ -9,7 +9,6 @@ const { animals } = require('./data/animals');
 
 // setting filter functionality apart, takes in req.query and filters through the data returning a new filtered array; also ensures that query.personalityTraits is always an array before the '.forEach' method executes
 function filterByQuery(query, animalsArray) {
-    console.log('filterByQuery')
     let personalityTraitsArray;
     // filtered results of animalsArray are saved here:
     let filteredResults = animalsArray;
@@ -19,10 +18,8 @@ function filterByQuery(query, animalsArray) {
         // if personalityTraits is a string, place and save within new array
         if (typeof query.personalityTraits === 'string') {
             personalityTraitsArray = [query.personalityTraits];
-            console.log('personalityTraitsArray1: ', personalityTraitsArray)
         } else {
             personalityTraitsArray = query.personalityTraits;
-            console.log('personalityTraitsArray2: ', personalityTraitsArray)
         }
         // loop through each trait of the personalityTraits array:
         personalityTraitsArray.forEach(trait => {
@@ -74,6 +71,12 @@ app.get('/api/animals/:id', (req, res) => {
     }
 });
 
+// the POST request will pass through both 'app.use' 'middlewear' functions before getting to intended endpoint;both need to be set up every time you create a server looking to accept POST data in the form of JSON.
+// first one converts incoming POST data to key/value pairs; 'extended: true' tells server there may be nested data, so it needs to look deep in order to parse correctly.
+app.use(express.urlencoded({ extended: true }));
+// ...second one parses incoming JSON data into req.body object
+app.use(express.json());
+
 // creates a server route that listens for 'post' requests: accepts user input to be stored on the server
 app.post('/api/animals', (req, res) => {
     // 'req.body' is where the incoming, packaged content will be
@@ -81,11 +84,6 @@ app.post('/api/animals', (req, res) => {
     // sending the data back to the client
     res.json(req.body);
 });
-
-// parse incoming string or array of data
-app.use(express.urlencoded({ extended: true }));
-// parse incoming JSON data
-app.use(express.json());
 
 // telling the server to listen
 app.listen(PORT, () => {
