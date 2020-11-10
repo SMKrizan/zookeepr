@@ -122,6 +122,7 @@ app.post('/api/animals', (req, res) => {
 
     // if an object is missing key data or is input incorrectly, send back 404 error
     if (!validateAnimal(req.body)) {
+        // response method that relays message to client making request
         res.status(400).send('The animal data is not properly formatted.');
     } else {
         // add animal to json file and animals array in this function
