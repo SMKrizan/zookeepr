@@ -25,12 +25,27 @@ const printResults = resultArr => {
 const getAnimals = (formData = {}) => {
   let queryUrl = '/api/animals?';
 
+  // if nothing is passed in, the response will simply GET /api/animals
   Object.entries(formData).forEach(([key, value]) => {
     queryUrl += `${key}=${value}&`;
   });
 
   console.log(queryUrl);
 
+  fetch(queryUrl)
+  .then(response => {
+    // checking HTTP status code for any errors
+    if (!response.ok) {
+      return alert('Error: ' + response.statusText);
+    }
+    // parsing response into readable json format
+    return response.json();
+  })
+  // prints to page
+  .then(animalData => {
+    console.log(animalData);
+    printResults(animalData);
+  });
 };
 
 const handleGetAnimalsSubmit = event => {

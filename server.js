@@ -129,10 +129,12 @@ app.get('/animals', (req, res) => {
     res.sendFile(path.join(__dirname, './public/animals.html'));
 });
 
-// 
+// app.get -> a method on "app" which is likely a variable containing Express, an app that controls requests
+// ('/api/zookeepers', <-- the URL route to match
+// (req, res) => { ....} <-- the function to execute when that route recieves the matching request 
 app.get('/zookeepers', (req, res) => {
     res.sendFile(path.join(__dirname, './public/zookeepers.html'));
-});
+  });
 
 // creates a server route that listens for 'post' requests: accepts user input to be stored on the server
 app.post('/api/animals', (req, res) => {
@@ -150,7 +152,7 @@ app.post('/api/animals', (req, res) => {
     }
 });
 
-// telling the server to listen
+// tells the server to listen
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
 });
