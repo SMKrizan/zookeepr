@@ -119,15 +119,6 @@
       "id": "11"
     },
     {
-      "name": "Larry",
-      "species": "lemur",
-      "diet": "omnivore",
-      "personalityTraits": [
-        "hungry"
-      ],
-      "id": "12"
-    },
-    {
       "name": "Petunia",
       "species": "marmoset",
       "diet": "omnivore",
@@ -135,34 +126,27 @@
         "hungry",
         "flighty"
       ],
-      "id": "13"
+      "id": "12"
     },
     {
       "name": "Pemba",
       "species": "flying fox",
-      "diet": "frugivore",
+      "diet": "herbivore",
       "personalityTraits": [
-        "timid"
+        "shy",
+        "loving"
       ],
-      "id": "14"
+      "id": "13"
     },
     {
       "name": "Horace",
       "species": "lion",
       "diet": "carnivore",
       "personalityTraits": [
-        ""
+        "ostentatious",
+        "goofy"
       ],
-      "id": "15"
-    },
-    {
-      "name": "Horace",
-      "species": "lion",
-      "diet": "15",
-      "personalityTraits": [
-        "ostentatious"
-      ],
-      "id": "16"
+      "id": "14"
     },
     {
       "name": "Tympany",
@@ -173,7 +157,7 @@
         "loving",
         "goofy"
       ],
-      "id": "17"
+      "id": "15"
     }
   ]
 }
