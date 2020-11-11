@@ -163,6 +163,17 @@
         "ostentatious"
       ],
       "id": "16"
+    },
+    {
+      "name": "Tympany",
+      "species": "elephant",
+      "diet": "herbivore",
+      "personalityTraits": [
+        "zany",
+        "loving",
+        "goofy"
+      ],
+      "id": "17"
     }
   ]
 }

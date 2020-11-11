@@ -86,6 +86,15 @@ function validateAnimal(animal) {
     return true;
 }
 
+// the POST request will pass through both 'app.use' 'middlewear' functions before getting to intended endpoint;both need to be set up every time you create a server looking to accept POST data in the form of JSON.
+// first one converts incoming POST data to key/value pairs; 'extended: true' tells server there may be nested data, so it needs to look deep in order to parse correctly.
+app.use(express.urlencoded({ extended: true }));
+// ...second one parses incoming JSON data into req.body object
+app.use(express.json());
+
+// instructs server to make specific files 'static resources', e.g. readily available (rather than gated behind server endpoint).   
+app.use(express.static('public'));
+
 // the route by which the front-end can request data; the two inputs are required: 
 // the 1st is a string (short for 'request') describing the route from which the client will fetch; 
 // the 2nd is a callback function (short for 'response') that will execute every time there's a GET request
@@ -109,11 +118,21 @@ app.get('/api/animals/:id', (req, res) => {
     }
 });
 
-// the POST request will pass through both 'app.use' 'middlewear' functions before getting to intended endpoint;both need to be set up every time you create a server looking to accept POST data in the form of JSON.
-// first one converts incoming POST data to key/value pairs; 'extended: true' tells server there may be nested data, so it needs to look deep in order to parse correctly.
-app.use(express.urlencoded({ extended: true }));
-// ...second one parses incoming JSON data into req.body object
-app.use(express.json());
+// adding a route to handle the index.html to be the homepage, as indicated by the convention: '/'
+app.get('/', (req, res) => {
+    // this GET has one job: to respond with html file to display in browser; the use of path module will ensure that correct html location is found regardless of server environment
+    res.sendFile(path.join(__dirname, './public/index.html'));
+});
+
+// adding route to handle transfer of an html page, as indicated by the convention: '/someString'
+app.get('/animals', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/animals.html'));
+});
+
+// 
+app.get('/zookeepers', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/zookeepers.html'));
+});
 
 // creates a server route that listens for 'post' requests: accepts user input to be stored on the server
 app.post('/api/animals', (req, res) => {
