@@ -38,7 +38,7 @@ router.post('/animals', (req, res) => {
         // response method that relays message to client making request
         res.status(400).send('The animal data is not properly formatted.');
     } else {
-        // add animal to json file and animals array in this function
+        // add animal to json file and animals array
         const animal = createNewAnimal(req.body, animals);
         res.json(animal);
     }
