@@ -34,7 +34,7 @@ router.post('/zookeepers', (req, res) => {
     req.body.id = zookeepers.length.toString();
 
     // if an object is missing key data or is input incorrectly, send back 404 error
-    if(validateZookeeper(req.body)) {
+    if(!validateZookeeper(req.body)) {
         // response method that relays message to client making request
         res.status(400).send('Your entry is not properly formatted.');
     } else {

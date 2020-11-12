@@ -1,5 +1,5 @@
 const $displayArea = document.querySelector('#display-area');
-const $zookeeperForm = document.querySelector(#zookeeper-form");
+const $zookeeperForm = document.querySelector("#zookeeper-form");
 
 const printResults = resultArr => {
   console.log(resultArr);
